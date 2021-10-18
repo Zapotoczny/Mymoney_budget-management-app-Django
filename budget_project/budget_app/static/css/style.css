@@ -1,0 +1,180 @@
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+    height: 100%;
+    width: 85px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #2196F3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0px;
+    white-space: nowrap;
+    box-shadow: 5px 60px 5px -4px #888;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #d3d3d3;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.material-icons,
+.icon-text {
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.material-icons {
+    padding-bottom: 3px;
+    font-size: 30px;
+}
+
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+    margin-left: 100px;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+.logout {
+position: absolute;
+bottom: 20px;
+}
+
+li{
+margin: 10px -3px;
+}
+
+.datepicker-date-display {
+    background-color: #2196f3;
+}
+
+.welcome{
+    font-size: 40px;
+}
+nav {
+    z-index:1
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    font-size: 16px;
+    color: #2196f3;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+    font-weight: 600;
+}
+
+.dash_info{
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-right: 50px;
+    margin-left: 50px !important;
+    box-shadow:  0 20px 25px rgba(0,0,0,0.25);
+    text-align: left;
+}
+.dash_info *{
+    font-family: "Poppins",sans-serif;
+    font-size: 26px;
+    font-color: black;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.dash_info_payment{
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-right: 50px;
+    margin-left: 190px !important;
+    box-shadow:  0 20px 25px rgba(0,0,0,0.25);
+    text-align: left;
+}
+.dash_info_payment *{
+    font-family: "Poppins",sans-serif;
+    font-size: 26px;
+    font-color: black;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.add_item {
+    margin-left: 250px;
+}
+
+.add_expanse_title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #7e7e7e;
+    text-align: center;
+    font-weight:700;
+}
+
+.tabs {
+    width: 50% !important;
+    margin-left: 0px;
+   }
+
+
+.tabs-fixed-width {
+    width: 600px !important;
+    margin: auto;
+}
+
+.expanse_tab {
+    width: 400px !important;
+    margin: auto;
+}
+
+.category_tab {
+    margin-top: 50px;
+}
+
+. {
+    margin: 0 auto;
+    width: 70%;
+}
+.payment_charts {
+  width: 350px;
+  height: 150px;
+  margin: 10px;
+  padding: 25px;
+  background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow:  0 20px 25px rgba(0,0,0,0.25);
+}
+
+.payments_chart {
+    margin-left: auto;
+    margin-right: auto;
+}

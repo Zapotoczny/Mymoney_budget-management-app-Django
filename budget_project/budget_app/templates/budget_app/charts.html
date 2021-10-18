@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <title>Budget App</title>
+        <script src="{% static 'scripts.js' %}"></script>
+        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script type='text/javascript' src="{% static 'dynamicpage.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type = "text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+
+<nav class="blue" >
+     <center><a href='{% url "index" %}' class='welcome'>Cześć, {{ user }}</a></center>
+</nav>
+
+    <!-- Sidebar -->
+
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <ul>
+            <li><a href="app"><span><i class="material-icons" style="font-size: 50px; margin-left: -8px;">paid</i><span class="icon-text" style="font-size:30px">&nbsp;&nbsp;&nbsp;&nbsp;MyMoney</span></a></li>
+            <li><a href="app"><span><i class="material-icons">dashboard</i><span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Pulpit</span></a></li>
+            <li><a href="operations"><i class="material-icons">grading</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Operacje</a></span></li>
+            <li><a href="payments"><i class="material-icons">paid</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Dochody</a></span></li>
+            <li><a href="charts"><i class="material-icons">stacked_bar_chart</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Wykresy</span></a></li>
+            <li><a href="#"><i class="material-icons">article</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Raporty</span></a></li>
+            <li><a href="settings"><i class="material-icons">settings</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Ustawienia</span></a></li>
+        </ul>
+        <a href="{% url "logout" %}" class="logout"><i class="material-icons">logout</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;logout<span></a>
+    </div>
+
+
+<div id="main">
+    <div class="container2">
+        <div class="row">
+            <ul class="tabs tabs-fixed-width" style="width:600px !important;">
+                <li class="tab"><a class="active" href="#wydatki">Wydatki</a></li>
+                 <li class="tab"><a href="#kategorie">Kategorie</a></li>
+                <li class="tab"><a href="#wplaty">Wpłaty</a></li>
+             </ul>
+<!--            WYDATKI-->
+            <div id="wydatki" class="col s12"><p>
+                <div class="col s12">
+          <ul class="tabs expanse_tab tab-demo z-depth-1" style="margin-bottom: 40px; margin-top:15px;">
+                <li class="tab col s4"><a class="active" href="#test1">Tydzień</a></li>
+                <li class="tab col s4"><a href="#test2">Miesiąc</a></li>
+                <li class="tab col s4"><a href="#test3">Rok</a></li>
+          </ul>
+                <div id="test1" class="col s12"><canvas id="myChart"  width="450" height="630"></canvas></div>
+                <div id="test2" class="col s12"><canvas id="myChart2"  width="450" height="630"></canvas></div>
+                <div id="test3" class="col s12"><canvas id="myChart3"  width="450" height="630"></canvas></div>
+            </div>
+            </p></div>
+<!--            KATEGORIE-->
+            <div id="kategorie" class="category_tab col s11"><p>
+                    <div class="col s6"><canvas id="myChart4"  width="300" height="550"></canvas></div>
+                    <div class="col s6"><canvas id="myChart5"  width="300" height="550"></canvas></div>
+            </p></div>
+<!--            WPLATY-->
+            <div id="wplaty" class="col s12"><p>
+                    <div class="section">
+                <div class="row">
+                    <div class="container">
+                            <div class="dash_info_payment col s3 offset-s3 "><a class="title_dash_balance2">{{user1}}</a>
+                                            <h4 class="amount_dash_balance2">{{expense_payments_user1}}zł</h4></div>
+                            <div class="dash_info_payment col s3 offset-s3"><a class="title_dash_balance3">{{user2_name}}</a>
+                                            <h4 class="amount_dash_balance2">{{expense_payments_user2}}zł</h4></div>
+
+            </p></div></div></div><div id="test3" class="col s12"><canvas id="myChart6"  width="450" height="530"></canvas></div></div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels|safe}},
+        datasets: [{
+            label: '# Suma',
+            fill: false,
+            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            data: {{data|safe}}
+        },
+        {
+            label: '{{user1}}',
+            fill: false,
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            data: {{data_user1|safe}},
+        },
+        {
+            label: '{{user2_name}}',
+            fill: false,
+            backgroundColor: 'rgba(255, 206, 86, 0.8)',
+            data: {{data_user2|safe}},
+        }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false
+             }
+});
+
+</script>
+<!--CHART 2 WEEK-->
+<script>
+var ctx = document.getElementById('myChart2').getContext('2d');
+var myChart2 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels_month|safe}},
+        datasets: [{
+            label: '# Suma',
+            fill: false,
+            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            data: {{data_month|safe}}
+        },
+        {
+            label: '{{user1}}',
+            fill: false,
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            data: {{data_month_user1|safe}},
+        },
+        {
+            label: '{{user2_name}}',
+            fill: false,
+            backgroundColor: 'rgba(255, 206, 86, 0.8)',
+            data: {{data_month_user2|safe}},
+        }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false
+             }
+});
+</script>>
+<!--CHART 3 Year-->
+<script>
+var ctx = document.getElementById('myChart3').getContext('2d');
+var myChart3 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels_year|safe}},
+        datasets: [{
+            label: '# Suma',
+            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            data: {{data_year|safe}}
+        },
+        {
+            label: '{{user1}}',
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            data: {{data_year_user1|safe}},
+        },
+        {
+            label: '{{user2_name}}',
+            backgroundColor: 'rgba(255, 206, 86, 0.8)',
+            data: {{data_year_user2|safe}},
+        }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false
+             }
+});
+
+</script>
+<!--Category-->
+<script>
+var ctx = document.getElementById('myChart4').getContext('2d');
+var myChart4 = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: {{labels_category|safe}},
+        datasets: [{
+            label: '# Wydatki',
+            data: {{data_category|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        maintainAspectRatio: false
+             }
+});
+
+</script>
+<!--Category-->
+<script>
+var ctx = document.getElementById('myChart5').getContext('2d');
+var myChart5 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels_category_exp|safe}},
+        datasets: [{
+            data: {{data_category_exp|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+         scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+             }
+});
+
+</script>
+
+<script>
+var ctx = document.getElementById('myChart6').getContext('2d');
+var myChart6 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels_year|safe}},
+        datasets: [{
+            label: '# Suma',
+            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            data: {{data_payments_all|safe}}
+        },
+        {
+            label: '{{user1}}',
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            data: {{data_payments_user1|safe}},
+        },
+        {
+            label: '{{user2_name}}',
+            backgroundColor: 'rgba(255, 206, 86, 0.8)',
+            data: {{data_payments_user2|safe}},
+        }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false
+             }
+});
+    </script>

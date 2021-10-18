@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <title>Budget App</title>
+        <script src="{% static 'scripts.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+
+<body>
+
+<nav class="blue" >
+     <center><a href='{% url "index" %}' class='welcome'>Cześć, {{ user }}</a></center>
+</nav>
+
+    <!-- Sidebar -->
+
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <ul>
+            <li><a href="app"><span><i class="material-icons" style="font-size: 50px; margin-left: -8px;">paid</i><span class="icon-text" style="font-size:30px">&nbsp;&nbsp;&nbsp;&nbsp;MyMoney</span></a></li>
+            <li><a href="app"><span><i class="material-icons">dashboard</i><span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Pulpit</span></a></li>
+            <li><a href="operations"><i class="material-icons">grading</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Operacje</a></span></li>
+            <li><a href="payments"><i class="material-icons">paid</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Dochody</a></span></li>
+            <li><a href="charts"><i class="material-icons">stacked_bar_chart</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Wykresy</span></a></li>
+            <li><a href="#"><i class="material-icons">article</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Raporty</span></a></li>
+            <li><a href="settings"><i class="material-icons">settings</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Ustawienia</span></a></li>
+        </ul>
+        <a href="{% url "logout" %}" class="logout"><i class="material-icons">logout</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;logout<span></a>
+    </div>
+
+
+    <div id="main">
+
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "add item" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container">
+<!--                            <h3 class='center'>Wpływy wynoszą : <span style="color:green;">{{budget}}</span> zł</h3>-->
+<!--                            <h3 clas='center'>Wydatki wynoszą : <span style="color:red;">{{expenses}}</span> zł</h3>-->
+                            <div class="dash_info col s3">
+                                    <a class="title_dash_balance1">Balans</a>
+                                            <h4 class="amount_dash_balance1">{{balance}}zł</h4></div>
+                            <div class="dash_info col s3"><a class="title_dash_balance2">Dzisiejsze wydatki</a>
+                                            <h4 class="amount_dash_balance2">{{expenses_today}}zł</h4></div>
+                            <div class="dash_info col s3"><a class="title_dash_balance3">Miesięczne wydatki</a>
+                                            <h4 class="amount_dash_balance2">{{expenses_month}}zł</h4></div>
+                            <br><br><br><br><br><br><br>
+                            <h4 class="add_expanse_title">Dodaj wydatek</h4>
+                            <div class="add_item">
+                                    <div class="input-field col s2">
+                                    <input placeholder="Nazwa" name="expense_name" id='expense_name' type='text' class='validate'>
+                                </div>
+                                <div class="input-field col s2">
+                                    <select name="category" id='category' class='validate'>
+                                      <option value="" disabled selected>Kategoria</option>
+                                      <option value="Przyjemności">Przyjemności</option>
+                                      <option value="Spożywcze">Spożywcze</option>
+                                      <option value="Dom">Dom</option>
+                                      <option value="Rachunki">Rachunki</option>
+                                      <option value="Chemia">Chemia</option>
+                                      <option value="Samochód">Samochód</option>
+                                    </select>
+                                </div>
+                                <div class="input-field col s2">
+                                    <input placeholder='Wartość' name='cost' id='cost' type='number' min="0" class='validate'>
+                                </div>
+                                <div class="input-field col s2">
+                                    <input placeholder='Data' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                </div>
+                                <button class="btn-floating btn-large waves-effect waves-light blue">
+                                    <i class="material-icons right">add</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="row">
+                <div class="container">
+                    <div class="col s6">
+                        <table class="highlight centered responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Użytkownik</th>
+                                    <th>Nazwa</th>
+                                    <th>Kategoria</th>
+                                    <th>Wartość</th>
+                                    <th>Data</th>
+                                    <th>Usuń</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for expense_item in expense_items %}
+                                <tr>
+                                    <td>{{ expense_item.username}}</td>
+                                    <td>{{ expense_item.expense_name }}</td>
+                                    <td>{{ expense_item.category }}</td>
+                                    <td>{{ expense_item.cost }}zł</td>
+                                    <td>{{ expense_item.date_added}}</td>
+                                    <td><a href="{% url 'delete item' expense_item.id %}"><i class="material-icons" style="color: red;">delete</i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+                    <div class="col s6">
+                        <canvas id="myChart"  width="400" height="250"></canvas>
+                    </div>
+                    <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{labels|safe}},
+        datasets: [{
+            label: '# Wydatki',
+            data: {{data|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                suggestedMin: 0,
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+                </div>
+        </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>

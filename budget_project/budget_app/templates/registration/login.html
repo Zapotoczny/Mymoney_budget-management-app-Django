@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <title>Budget App</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+<div class="container">
+        <div class="card center spacer">
+            <center><h4 >MyMoney</h4></center>
+            <div class="text-center line form-divider"> </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+<!--                        <img class="icon input-icon" src="{% static 'icons/profile-user.svg' %}" alt="">-->
+                        {{form.username}}
+                    </div>
+                    <div class="input-group">
+<!--                        <img class="icon input-icon" src="{% static 'icons/key.svg' %}" alt="">-->
+                        {{form.password}}
+                     </div>
+                    <input type="submit" class="submit" value="Login">
+                </form>
+                <br>
+                <div class="redirect">
+                    Nie masz jeszcze konta?<a href='{% url "signup" %}'><strong> Dołącz do nas!</strong></a>
+                    <br><br>
+                </div>
+
+            </div>
+        </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+
+</html>
