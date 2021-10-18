@@ -105,6 +105,10 @@ def operations(request):
     return render(request, "budget_app/operations.html", context=context)
 
 
+def calendar_payment(request):
+    return render(request, "budget_app/calendar.html")
+
+
 def charts(request):
     budget_id = request.user.last_name
     #################################################
@@ -242,9 +246,6 @@ def charts(request):
         data_payments_user1.insert(0, user1_payments['expenses'])
         data_payments_user2.insert(0, user2_payments['expenses'])
         data_payments_all.insert(0, payments_all['expenses'])
-    print(data_payments_user1)
-    print(data_payments_user2)
-    print(data_payments_all)
     #################################################
     # Category
     #################################################

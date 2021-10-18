@@ -178,3 +178,8 @@ nav {
     margin-left: auto;
     margin-right: auto;
 }
+
+.container_calendar {
+margin: 0 auto;
+    width: 70%;
+}
