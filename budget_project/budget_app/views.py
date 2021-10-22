@@ -21,6 +21,11 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 
 
+def login_user_budget(request):
+    budget_id = request.user.last_name
+    return budget_id
+
+
 class CalendarView(generic.ListView):
     model = Event
     template_name = 'budget_app/calendar.html'

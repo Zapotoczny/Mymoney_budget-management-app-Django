@@ -183,3 +183,43 @@ nav {
 margin: 0 auto;
     width: 70%;
 }
+.calendar {
+    width: 65%;
+    height: 25%;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: #ffffff;
+    box-shadow:  0 20px 25px rgba(0,0,0,0.25);
+    border-radius: 8px;
+    font-size:15px;
+    text-align: right !important;
+}
+.clearfix {
+    width: 65%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.month {
+text-align:center;
+font-size:25px;
+box-shadow:  0 5px 6px rgba(0,0,0,0.25);
+font-family: 'Montserrat', sans-serif;
+}
+
+.date_month {
+    margin:0px !important;
+    text-align: center !important;
+    font-size:20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.date {
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.cell {
+border: 2px solid #f3f3f3;
+font-family: 'Montserrat', sans-serif;
+}
