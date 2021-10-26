@@ -48,6 +48,7 @@
 
 
 <div id="main">
+    <div class="container">
 {% block content %}
 <div class="clearfix">
 	<a class="btn btn-info left" style="background-color:#2196f3; font-family: 'Montserrat', sans-serif; font-weight: bold;" href="?{{ prev_month }}"> Poprzedni miesiąc </a>
@@ -56,8 +57,33 @@
 
 {{ calendar }}
 {% endblock %}
-</div>
+<table class="highlight centered responsive-table">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Wartość</th>
+            <th>Data</th>
+            <th>Usuń</th>
+            <th></th>
+        </tr>
+    </thead>
 
+    <tbody>
+        {% for show_payment in show_payments %}
+        <tr>
+            <td>{{ show_payment.username}}</td>
+            <td>{{ show_payment.expense_name }}</td>
+            <td>{{ show_payment.category }}</td>
+            <td>{{ show_payment.cost }}zł</td>
+            <td>{{ show_payment.date_added}}</td>
+            <td><a href="{% url 'delete item calendar' show_payment.id %}"><i class="material-icons" style="color: red;">delete</i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
 </body>
 
 </html>

@@ -16,6 +16,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('add_item', views.add_item, name='add item'),
     path(r'^delete_item/(?P<pk>\d+)$', views.delete_item, name='delete item'),
+    path(r'^delete_item_calendar/(?P<pk>\d+)$', views.delete_item_calendar, name='delete item calendar'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('logout', views.logout_view, name='logout'),
 ]

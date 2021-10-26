@@ -38,7 +38,14 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
+        context['show_payments'] = show_payments()
         return context
+
+def show_payments():
+    # budget_id = request.user.last_name
+    expense_items = ExpenseInfo.objects.filter(user_expense='K5QWE23').order_by('-date_added')
+    return expense_items
+
 
 def get_date(req_month):
     if req_month:
@@ -119,6 +126,10 @@ def add_item(request):
 def delete_item(request, pk):
     ExpenseInfo.objects.filter(id=pk).delete()
     return HttpResponseRedirect('/app')
+
+def delete_item_calendar(request, pk):
+    ExpenseInfo.objects.filter(id=pk).delete()
+    return HttpResponseRedirect('/calendar')
 
 
 def logout_view(request):

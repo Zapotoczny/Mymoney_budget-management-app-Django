@@ -184,7 +184,6 @@ margin: 0 auto;
     width: 70%;
 }
 .calendar {
-    width: 65%;
     height: 25%;
     margin-left:auto;
     margin-right:auto;
@@ -195,7 +194,6 @@ margin: 0 auto;
     text-align: right !important;
 }
 .clearfix {
-    width: 65%;
     margin-left:auto;
     margin-right:auto;
 }
@@ -222,4 +220,7 @@ font-family: 'Montserrat', sans-serif;
 .cell {
 border: 2px solid #f3f3f3;
 font-family: 'Montserrat', sans-serif;
+}
+td:hover {
+   background-color: #f3f3f3;
 }

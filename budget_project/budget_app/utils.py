@@ -27,7 +27,13 @@ class Calendar(HTMLCalendar):
             up_down = "src='https://www.colorhexa.com/ffffff.png'"
         # for event in events_per_day:
         if day != 0:
-            return f"<td class='cell'><span class='date'>{day}</span><ul class='date_month' style='color:{color};'><b> {d['budget']} </b><img {up_down} width='20' height='24'></ul></td>"
+            return f"""<td class='cell'>
+            <a href='http://example.com'>
+            <div style="height:100%;width:100%">
+            <span class='date'>{day}</span>
+            <ul class='date_month' style='color:{color};'><b> {d['budget']} </b>
+            <img {up_down} width='20' height='24'>
+            </ul></td></a></div>"""
         return '<td></td>'
 
     # formats a week as a tr
