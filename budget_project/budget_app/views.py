@@ -9,7 +9,6 @@ from django.db.models import Q, Count
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.urls import reverse
 
 from .forms import SignUpForm, LoginForm
 
@@ -20,11 +19,8 @@ from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
 
-
-def login_user_budget(request):
-    budget_id = request.user.last_name
-    return budget_id
-
+def login_user(request):
+    return request.user.last_name
 
 class CalendarView(generic.ListView):
     model = Event
@@ -38,13 +34,13 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
-        context['show_payments'] = show_payments()
         return context
 
-def show_payments():
-    # budget_id = request.user.last_name
-    expense_items = ExpenseInfo.objects.filter(user_expense='K5QWE23').order_by('-date_added')
-    return expense_items
+
+def show_payments(request, pk):
+    budget_id = request.user.last_name
+    expense_items = ExpenseInfo.objects.filter(user_expense=budget_id, date_added=pk).order_by('-date_added')
+    return render(request, "budget_app/calendar_payments.html", context={'expense_items': expense_items,'pk':pk})
 
 
 def get_date(req_month):

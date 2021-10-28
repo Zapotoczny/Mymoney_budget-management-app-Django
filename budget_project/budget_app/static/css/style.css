@@ -184,7 +184,7 @@ margin: 0 auto;
     width: 70%;
 }
 .calendar {
-    height: 25%;
+    height: 700px !important;
     margin-left:auto;
     margin-right:auto;
     background-color: #ffffff;
@@ -223,4 +223,12 @@ font-family: 'Montserrat', sans-serif;
 }
 td:hover {
    background-color: #f3f3f3;
+}
+
+.calendar_payment {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    color: #7e7e7e;
+    text-align: center;
+    font-weight:700;
 }

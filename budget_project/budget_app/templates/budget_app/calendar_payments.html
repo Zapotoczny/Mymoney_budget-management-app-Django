@@ -49,15 +49,35 @@
 
 <div id="main">
     <div class="container">
-{% block content %}
-<div class="clearfix">
-	<a class="btn btn-info left" style="background-color:#2196f3; font-family: 'Montserrat', sans-serif; font-weight: bold;" href="?{{ prev_month }}"> Poprzedni miesiąc </a>
-	<a class="btn btn-info right" style="background-color:#2196f3; font-family: 'Montserrat', sans-serif; font-weight: bold;" href="?{{ next_month }}"> Następny miesiąc </a>
+        <h1 class="calendar_payment">{{pk}}</h1>
+    <table class="highlight centered responsive-table">
+        <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Nazwa</th>
+                <th>Kategoria</th>
+                <th>Wartość</th>
+                <th>Data</th>
+                <th>Usuń</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for expense_item in expense_items %}
+            <tr>
+                <td>{{ expense_item.username}}</td>
+                <td>{{ expense_item.expense_name }}</td>
+                <td>{{ expense_item.category }}</td>
+                <td>{{ expense_item.cost }}zł</td>
+                <td>{{ expense_item.date_added}}</td>
+                <td><a href="{% url 'delete item calendar' expense_item.id %}"><i class="material-icons" style="color: red;">delete</i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
 </div>
-
-{{ calendar }}
-{% endblock %}
-
 </body>
 
 </html>

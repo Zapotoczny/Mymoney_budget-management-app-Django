@@ -1,19 +1,21 @@
-from datetime import datetime, timedelta, date
 from calendar import HTMLCalendar
 from .models import Event, ExpenseInfo
 from django.db.models import Sum
+from django.contrib.auth.models import User
+
 
 class Calendar(HTMLCalendar):
-    def __init__(self, year=None, month=None):
+    def __init__(self, year=None, month=None,):
         self.year = year
         self.month = month
         super(Calendar, self).__init__()
 
-    # formats a day as a td
-    # filter events by day
     def formatday(self, day, events):
+        # budget_id = request.user.budget_id
         # events_per_day = events.filter(start_time__day=day)
-        d = ExpenseInfo.objects.filter(date_added__day=day, date_added__month=self.month, date_added__year=self.year).aggregate(
+        current_date = f'{self.year}-{self.month}-{day}'
+        d = ExpenseInfo.objects.filter(date_added__day=day, date_added__month=self.month,
+                                       date_added__year=self.year).aggregate(
             budget=Sum('cost'))
         if type(d['budget']) is float:
             if d['budget'] < 0:
@@ -27,13 +29,13 @@ class Calendar(HTMLCalendar):
             up_down = "src='https://www.colorhexa.com/ffffff.png'"
         # for event in events_per_day:
         if day != 0:
-            return f"""<td class='cell'>
-            <a href='http://example.com'>
+            return """<td class='cell'>
+            <a href="/%5Eshow_payments/(%3FP{}%5Cd+)$">
             <div style="height:100%;width:100%">
-            <span class='date'>{day}</span>
-            <ul class='date_month' style='color:{color};'><b> {d['budget']} </b>
-            <img {up_down} width='20' height='24'>
-            </ul></td></a></div>"""
+            <span class='date'>{}</span>
+            <ul class='date_month' style='color:{};'><b> {} </b>
+            <img {} width='20' height='24'>
+            </ul></td></a></div>""".format(current_date, day, color, d['budget'], up_down)
         return '<td></td>'
 
     # formats a week as a tr
