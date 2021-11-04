@@ -2,6 +2,7 @@ import calendar
 from datetime import date, timedelta
 from collections import Counter
 
+import xlwt
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -19,8 +20,10 @@ from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
 
+
 def login_user(request):
     return request.user.last_name
+
 
 class CalendarView(generic.ListView):
     model = Event
@@ -40,7 +43,7 @@ class CalendarView(generic.ListView):
 def show_payments(request, pk):
     budget_id = request.user.last_name
     expense_items = ExpenseInfo.objects.filter(user_expense=budget_id, date_added=pk).order_by('-date_added')
-    return render(request, "budget_app/calendar_payments.html", context={'expense_items': expense_items,'pk':pk})
+    return render(request, "budget_app/calendar_payments.html", context={'expense_items': expense_items, 'pk': pk})
 
 
 def get_date(req_month):
@@ -49,11 +52,13 @@ def get_date(req_month):
         return date(year, month, day=1)
     return datetime.today()
 
+
 def prev_month(d):
     first = d.replace(day=1)
     prev_month = first - timedelta(days=1)
     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
     return month
+
 
 def next_month(d):
     days_in_month = calendar.monthrange(d.year, d.month)[1]
@@ -61,7 +66,6 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
-
 
 
 def index(request):
@@ -82,6 +86,10 @@ def index(request):
             balance = budget_total['budget'] - expense_total['expenses']
         else:
             balance = budget_total['budget']
+        if expense_today['expenses'] is None:
+            expense_today['expenses'] = 0
+        if expense_month['expenses'] is None:
+            expense_month['expenses'] = 0
     except TypeError or UnboundLocalError:
         print('No data.')
 
@@ -98,7 +106,7 @@ def index(request):
         if dupa['expenses'] is None:
             dupa['expenses'] = 0
         data.append(dupa['expenses'])
-
+        print(expense_month)
     context = {'username': username, 'expense_items': expense_items, 'budget': budget_total['budget'],
                'expenses': expense_total['expenses'], 'expenses_today': expense_today['expenses'],
                'expenses_month': expense_month['expenses'], 'balance': balance, 'labels': labels, 'data': data}
@@ -123,6 +131,7 @@ def delete_item(request, pk):
     ExpenseInfo.objects.filter(id=pk).delete()
     return HttpResponseRedirect('/app')
 
+
 def delete_item_calendar(request, pk):
     ExpenseInfo.objects.filter(id=pk).delete()
     return HttpResponseRedirect('/calendar')
@@ -135,6 +144,41 @@ def logout_view(request):
 
 def settings(request):
     return render(request, "budget_app/settings.html")
+
+
+def raports(request):
+    return render(request, "budget_app/raports.html")
+
+
+def export_xls(request):
+    budget_id = request.user.last_name
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Expenses' + \
+                                      str(datetime.now()) + '.xls'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Expenses')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['username', 'expense_name', 'category', 'cost', 'date_added']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+
+    rows = ExpenseInfo.objects.filter(user_expense=budget_id).values_list(
+        'username', 'expense_name', 'category', 'cost', 'date_added')
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+    wb.save(response)
+
+    return response
 
 
 def operations(request):
