@@ -227,8 +227,21 @@ td:hover {
 
 .calendar_payment {
     font-family: 'Montserrat', sans-serif;
-    font-size: 40px;
+    font-size: 50px;
     color: #7e7e7e;
     text-align: center;
+    font-weight:800;
+}
+
+.fromto {
+    font-family: 'Montserrat', sans-serif;
+    color: #7e7e7e;
+    font-size: 15px;
     font-weight:700;
+}.export_title {
+    font-family: 'Montserrat', sans-serif;
+    color: #7e7e7e;
+    font-size: 35px;
+    font-weight:800;
+    margin-bottom:50px;
 }

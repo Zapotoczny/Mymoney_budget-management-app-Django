@@ -3,7 +3,7 @@
 <html>
 
 <head>
-
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -41,7 +41,44 @@
     </div>
 
 <div id="main">
-<a href='{% url "export_xls" %}' class="btn">Export xls</a>
+    <div class="container">
+        <div class="row">
+            <div class="col s6" style="text-align:center;">
+                <div class="export_title">
+                    <h2>Eksport Excel</h2>
+                    <img src="https://findicons.com/files/icons/2795/office_2013_hd/2000/excel.png" width="80" height="95">
+                </div>
+                <form class="excel" action='{% url "export_xls" %}' method='post'>
+                    {% csrf_token %}
+                    <h5 class="fromto">Od:</h5>
+                    <input name="from" id="from" type="text" style="text-align:center;" class="datepicker">
+                    <h5 class="fromto">Do:</h5>
+                    <input name="to" id="to" type="text" style="text-align:center;" class="datepicker">
+                    <button class="btn-floating btn-large waves-effect waves-light blue" style="margin-top:20px;">
+                            <i class="material-icons right">file_download</i>
+                    </button>
+                </form>
+<!--                <a href='{% url "export_xls" %}' class="btn">Export xls</a>-->
+            </div>
+            <div class="col s6" style="text-align:center;">
+                <div class="export_title">
+                    <h2>Eksport PDF</h2>
+                    <img style="margin-bottom:20px;" src="https://media.istockphoto.com/vectors/icon-major-file-format-vector-icon-illustration-vector-id1298834280?b=1&k=20&m=1298834280&s=170667a&w=0&h=wcKtTYmT8r8LIzTnVLyhVBRpCUJIdR6g0GtW0RIpxxg=" width="80" height="95">
+                    <form class="excel" action='{% url "export_pdf" %}' method='post'>
+                    {% csrf_token %}
+                    <h5 class="fromto">Od:</h5>
+                    <input name="from" id="from" type="text" style="text-align:center;" class="datepicker">
+                    <h5 class="fromto">Do:</h5>
+                    <input name="to" id="to" type="text" style="text-align:center;" class="datepicker">
+                    <button class="btn-floating btn-large waves-effect waves-light blue" style="margin-top:20px;">
+                            <i class="material-icons right">file_download</i>
+                    </button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>

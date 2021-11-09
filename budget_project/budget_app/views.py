@@ -150,8 +150,36 @@ def raports(request):
     return render(request, "budget_app/raports.html")
 
 
+from xhtml2pdf import pisa
+from io import BytesIO
+from django.template.loader import get_template
+
+
+def export_pdf(request):
+    budget_id = request.user.last_name
+    from_ = request.POST['from']
+    to_ = request.POST['to']
+    expanse = ExpenseInfo.objects.filter(user_expense=budget_id, date_added__range=[from_, to_]).order_by(
+        '-date_added')
+    data = {'expense_items': expanse,
+            'from_':from_,
+            'to_':to_
+            }
+    template = get_template("budget_app/pdf-output.html")
+    data_p = template.render(data)
+    response = BytesIO()
+
+    pdfPage = pisa.pisaDocument(BytesIO(data_p.encode("UTF-8")), response)
+    if not pdfPage.err:
+        return HttpResponse(response.getvalue(), content_type="application/pdf")
+    else:
+        return HttpResponse("Error Generating PDF")
+
+
 def export_xls(request):
     budget_id = request.user.last_name
+    from_ = request.POST['from']
+    to_ = request.POST['to']
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Expenses' + \
                                       str(datetime.now()) + '.xls'
@@ -168,7 +196,8 @@ def export_xls(request):
 
     font_style = xlwt.XFStyle()
 
-    rows = ExpenseInfo.objects.filter(user_expense=budget_id).values_list(
+    rows = ExpenseInfo.objects.filter(user_expense=budget_id, date_added__range=[from_, to_]).order_by(
+        '-date_added').values_list(
         'username', 'expense_name', 'category', 'cost', 'date_added')
 
     for row in rows:

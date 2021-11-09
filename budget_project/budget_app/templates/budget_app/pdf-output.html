@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF OUTPUT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+
+    <style>
+@page{
+    size:"A4";
+    margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.center {
+    border: solid 1px #9bd3ff;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.center thead th {
+    background-color: #2196f3;
+    border: solid 1px #5ab6fc;
+    color: #ffffff;
+    padding: 5px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.center tbody td {
+    border: solid 1px #9bd3ff;
+    color: #333;
+    padding: 2px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    text-align: center;
+
+}.fromto {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    text-align: center;
+
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+<h1 class="title">MyMoney</h1>
+<h5 class="fromto">Twoje wydatki od: {{from_}} do: {{to_}}</h5>
+<table class="center">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Wartość</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for expense_item in expense_items %}
+        <tr>
+            <td>{{ expense_item.username}}</td>
+            <td>{{ expense_item.expense_name }}</td>
+            <td>{{ expense_item.category }}</td>
+            <td>{{ expense_item.cost }}zł</td>
+            <td>{{ expense_item.date_added}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

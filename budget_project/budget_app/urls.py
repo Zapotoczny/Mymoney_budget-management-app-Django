@@ -11,6 +11,7 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('raports', views.raports, name='raports'),
     path('export_xls', views.export_xls, name='export_xls'),
+    path('export_pdf', views.export_pdf, name='export_pdf'),
     path('operations', views.operations, name='operations'),
     path('calendar/', views.CalendarView.as_view(), name='calendar'),
     path('payments', views.payments, name='payments'),
