@@ -1,7 +1,6 @@
 import calendar
 from datetime import date, timedelta
 from collections import Counter
-
 import xlwt
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
@@ -10,15 +9,16 @@ from django.db.models import Q, Count
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-
-from .forms import SignUpForm, LoginForm
-
+from .forms import SignUpForm
 from .models import ExpenseInfo, Event
 from .utils import Calendar
-# Create your views here.
 from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
+from xhtml2pdf import pisa
+from io import BytesIO
+from django.template.loader import get_template
+# Create your views here.
 
 
 def login_user(request):
@@ -106,7 +106,6 @@ def index(request):
         if dupa['expenses'] is None:
             dupa['expenses'] = 0
         data.append(dupa['expenses'])
-        print(expense_month)
     context = {'username': username, 'expense_items': expense_items, 'budget': budget_total['budget'],
                'expenses': expense_total['expenses'], 'expenses_today': expense_today['expenses'],
                'expenses_month': expense_month['expenses'], 'balance': balance, 'labels': labels, 'data': data}
@@ -148,11 +147,6 @@ def settings(request):
 
 def raports(request):
     return render(request, "budget_app/raports.html")
-
-
-from xhtml2pdf import pisa
-from io import BytesIO
-from django.template.loader import get_template
 
 
 def export_pdf(request):
@@ -483,8 +477,8 @@ def signup(request):
                 return HttpResponseRedirect('/app')
         else:
             context = {'form': form, 'error': ''}
-            return render(request, 'budget_app/signup.html', context)
+            return render(request, 'registration/signup.html', context)
     form = SignUpForm()
 
     context = {'form': form}
-    return render(request, "budget_app/signup.html", context)
+    return render(request, "registration/signup.html", context)

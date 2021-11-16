@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+    <script src="scripts.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+
+            <form method="POST" action="" class="login-form spacer" id="login-form">
+            {% csrf_token %}
+                <h1>Welcome Back</h1>
+                <div class="errors">
+                    <p>{{form.errors}}</p>
+                </div>
+
+                <div class="input-box">
+                    {{form.username}}
+                </div>
+                <div class="input-box">
+                    {{form.password1}}
+                </div>
+                <div class="input-box">
+                    {{form.password2}}
+                </div>
+                <div class="budget_id">Dołącz do budżetu lub stwórz nowy
+                </div>
+                <div class="budget_id_desc">Minimum 8 znaków
+                </div>
+
+                <div class="input-box">
+                    {{form.last_name}}
+                </div>
+
+                <button type="submit" class="login-btn">Register</button>
+
+
+                <div class="bottom-links">
+                 <p>Don’t have account? <a href="/">Sign up</a></p>
+                 </div>
+
+
+            </form>
+
+
+
+</body>
+</html>

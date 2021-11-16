@@ -1,42 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+<title>Budget App</title>
+    <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+  <form action="" method="post" id="login-form">
+      {% csrf_token %}
+      <h1>Welcome Back</h1>
 
-<html>
+      {% if form.errors %}
+      <p class="error" style="color:red;">Incorrect login or password</p>
+      {% endif %}
+      <p class="login_user_pass">Username:</p>
+      <div class="input-box">
+          {{form.username}}
+      </div>
+      <p class="login_user_pass">Password:</p>
+      <div class="input-box">
+          {{form.password}}
+      </div>
 
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <title>Budget App</title>
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-<div class="container">
-        <div class="card center spacer">
-            <center><h4 >MyMoney</h4></center>
-            <div class="text-center line form-divider"> </div>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="input-group">
-<!--                        <img class="icon input-icon" src="{% static 'icons/profile-user.svg' %}" alt="">-->
-                        {{form.username}}
-                    </div>
-                    <div class="input-group">
-<!--                        <img class="icon input-icon" src="{% static 'icons/key.svg' %}" alt="">-->
-                        {{form.password}}
-                     </div>
-                    <input type="submit" class="submit" value="Login">
-                </form>
-                <br>
-                <div class="redirect">
-                    Nie masz jeszcze konta?<a href='{% url "signup" %}'><strong> Dołącz do nas!</strong></a>
-                    <br><br>
-                </div>
+      <button type="submit" class="login-btn">Login</button>
 
-            </div>
-        </div>
-
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    </body>
-
+      <div class="bottom-links">
+        <p>Don’t have account? <a href="/signup">Sign up</a></p>
+      </div>
+  </form>
+</body>
 </html>
