@@ -41,14 +41,14 @@
     </div>
 
 <div id="main">
-    <div class="input-field col s12 m6">
-    <select class="browser-default">
-      <option value="" disabled selected>Choose your option</option>
-      <option value="" data-icon="images/sample-1.jpg">example 1</option>
-      <option value="" data-icon="images/office.jpg">example 2</option>
-      <option value="" data-icon="images/yuna.jpg">example 3</option>
-    </select>
-  </div>
+    <div class="change_name">
+        <p class="title">Zmiana nazwy użytkownika</p>
+        <div class="error" style="font-size:12px;">{{ info }}</div>
+        <form id="change_name" method="post" action='{% url "change_name" %}'>
+            {% csrf_token %}
+            <input placeholder='Podaj nową nazwę' name='change_name' id='change_name' type='text'>
+        </form>
+    </div>
 </div>
 
 </body>

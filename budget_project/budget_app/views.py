@@ -18,6 +18,8 @@ from django.utils.safestring import mark_safe
 from xhtml2pdf import pisa
 from io import BytesIO
 from django.template.loader import get_template
+
+
 # Create your views here.
 
 
@@ -156,8 +158,8 @@ def export_pdf(request):
     expanse = ExpenseInfo.objects.filter(user_expense=budget_id, date_added__range=[from_, to_]).order_by(
         '-date_added')
     data = {'expense_items': expanse,
-            'from_':from_,
-            'to_':to_
+            'from_': from_,
+            'to_': to_
             }
     template = get_template("budget_app/pdf-output.html")
     data_p = template.render(data)
@@ -238,10 +240,13 @@ def charts(request):
     data = []
     data_user1 = []
     data_user2 = []
-
-    user2 = list(User.objects.filter(last_name=budget_id))
-    user2.remove(request.user)
-    user2_name = user2[0]
+    try:
+        user2 = list(User.objects.filter(last_name=budget_id))
+        user2.remove(request.user)
+        user2_name = user2[0]
+    except IndexError:
+        user2 = None
+        user2_name = None
 
     for x in range(7):
         dzien = date.today() - timedelta(days=x)
@@ -371,7 +376,7 @@ def charts(request):
     payments_category = ['Nagroda', 'Wypłata', 'Inne']
     labels_category = []
     data_category = []
-    category = ExpenseInfo.objects.values('category').order_by('category').annotate(count=Count('category'))
+    category = ExpenseInfo.objects.filter(user_expense=budget_id).values('category').order_by('category').annotate(count=Count('category'))
     for x in range(len(category)):
         if category[x].get('category') not in payments_category:
             labels_category.append(category[x].get('category'))
@@ -379,7 +384,7 @@ def charts(request):
     #################################################
     # Category expanse
     #################################################
-    category_exp = ExpenseInfo.objects.values('cost', 'category').order_by('category')
+    category_exp = ExpenseInfo.objects.filter(user_expense=budget_id).values('cost', 'category').order_by('category')
     test = {}
     for x in category_exp:
         if x.get('cost') < 0:
@@ -461,6 +466,20 @@ def payments(request):
               'expense_month': expense_month['expenses'],
               'expense_month_last': expense_month_last['expenses']}
     return render(request, 'budget_app/payments.html', contex)
+
+
+def change_name(request):
+    try:
+        newusername = request.POST['change_name']
+        owner = User.objects.get(id=request.user.id)
+        owner.username = newusername
+        owner.save()
+        ExpenseInfo.objects.filter(username=request.user).update(username=newusername)
+        info = "Nazwa użytkownika została zmieniona."
+    except:
+        info = "Nazwa użytkownika już instnieje."
+    return render(request, "budget_app/settings.html", context = {'info':info})
+
 
 
 def signup(request):
