@@ -1,5 +1,5 @@
 from calendar import HTMLCalendar
-from .models import Event, ExpenseInfo
+from .models import ExpenseInfo
 from django.db.models import Sum
 from django.contrib.auth.models import User
 
@@ -10,9 +10,8 @@ class Calendar(HTMLCalendar):
         self.month = month
         super(Calendar, self).__init__()
 
-    def formatday(self, day, events):
+    def formatday(self, day):
         # budget_id = request.user.budget_id
-        # events_per_day = events.filter(start_time__day=day)
         current_date = f'{self.year}-{self.month}-{day}'
         d = ExpenseInfo.objects.filter(date_added__day=day, date_added__month=self.month,
                                        date_added__year=self.year).aggregate(
@@ -39,20 +38,18 @@ class Calendar(HTMLCalendar):
         return '<td></td>'
 
     # formats a week as a tr
-    def formatweek(self, theweek, events):
+    def formatweek(self, theweek):
         week = ''
         for d, weekday in theweek:
-            week += self.formatday(d, events)
+            week += self.formatday(d)
         return f'<tr> {week} </tr>'
 
     # formats a month as a table
     # filter events by year and month
     def formatmonth(self, withyear=True):
-        events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
-
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
         for week in self.monthdays2calendar(self.year, self.month):
-            cal += f'{self.formatweek(week, events)}\n'
+            cal += f'{self.formatweek(week)}\n'
         return cal

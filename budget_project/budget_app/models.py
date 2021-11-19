@@ -13,10 +13,3 @@ class ExpenseInfo(models.Model):
     budget_id = models.CharField(default='0123456789', max_length=10)
     date_added = models.DateField()
     user_expense = models.CharField(max_length=20)
-
-
-class Event(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()

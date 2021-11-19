@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import ExpenseInfo, Event
+from .models import ExpenseInfo
 
 # Register your models here.
 
 admin.site.register(ExpenseInfo)
-admin.site.register(Event)

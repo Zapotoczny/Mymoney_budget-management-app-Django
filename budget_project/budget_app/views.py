@@ -10,7 +10,7 @@ from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import SignUpForm
-from .models import ExpenseInfo, Event
+from .models import ExpenseInfo
 from .utils import Calendar
 from datetime import datetime
 from django.views import generic
@@ -28,7 +28,7 @@ def login_user(request):
 
 
 class CalendarView(generic.ListView):
-    model = Event
+    model = ExpenseInfo
     template_name = 'budget_app/calendar.html'
 
     def get_context_data(self, **kwargs):
