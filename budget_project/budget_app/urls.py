@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', auth_views.LoginView.as_view(),name='login'),
@@ -17,9 +19,13 @@ urlpatterns = [
     path('change_name', views.change_name, name='change_name'),
     path('signup/', views.signup, name='signup'),
     path('add_item', views.add_item, name='add item'),
+    path('add_item_by_img', views.add_item_by_img, name='add item by img'),
     path(r'^delete_item/(?P<pk>\d+)$', views.delete_item, name='delete item'),
     path(r'^delete_item_calendar/(?P<pk>\d+)$', views.delete_item_calendar, name='delete item calendar'),
     path(r'^show_payments/(?P<pk>\d+)$', views.show_payments, name='show payments'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('logout', views.logout_view, name='logout'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

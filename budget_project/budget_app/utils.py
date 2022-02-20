@@ -10,12 +10,11 @@ class Calendar(HTMLCalendar):
         self.month = month
         super(Calendar, self).__init__()
 
+
     def formatday(self, day):
-        # budget_id = request.user.budget_id
         current_date = f'{self.year}-{self.month}-{day}'
         d = ExpenseInfo.objects.filter(date_added__day=day, date_added__month=self.month,
-                                       date_added__year=self.year).aggregate(
-            budget=Sum('cost'))
+                                       date_added__year=self.year).aggregate(budget=Sum('cost'))
         if type(d['budget']) is float:
             if d['budget'] < 0:
                 color = 'red'
@@ -24,8 +23,8 @@ class Calendar(HTMLCalendar):
                 color = 'green'
                 up_down = "src='https://i.ibb.co/QPFBvYq/up.png'"
         else:
-            color = 'white'
-            up_down = "src='https://www.colorhexa.com/ffffff.png'"
+            color = 'rgba(255, 255, 255, .1)'
+            up_down = "src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='"
         # for event in events_per_day:
         if day != 0:
             return """<td class='cell'>

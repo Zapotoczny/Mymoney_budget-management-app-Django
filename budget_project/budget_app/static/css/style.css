@@ -99,10 +99,10 @@ nav {
 .dash_info{
     background-color: #ffffff;
     border-radius: 8px;
-    margin-right: 50px;
-    margin-left: 50px !important;
+    margin-right: 10px;
     box-shadow:  0 20px 25px rgba(0,0,0,0.25);
-    text-align: left;
+    text-align: center;
+    height: 96px;
 }
 .dash_info *{
     font-family: "Poppins",sans-serif;
@@ -130,6 +130,13 @@ nav {
 
 .add_item {
     margin-left: 250px;
+}
+
+.modal{
+    border-radius: 20px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #2196F3;
 }
 
 .add_expanse_title {

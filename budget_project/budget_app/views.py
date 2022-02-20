@@ -2,6 +2,9 @@ import calendar
 from datetime import date, timedelta
 from collections import Counter
 import xlwt
+import requests
+import cv2
+import pytesseract
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -18,6 +21,7 @@ from django.utils.safestring import mark_safe
 from xhtml2pdf import pisa
 from io import BytesIO
 from django.template.loader import get_template
+from django.core.files.storage import FileSystemStorage
 
 
 # Create your views here.
@@ -71,6 +75,7 @@ def next_month(d):
 
 
 def index(request):
+    balance = 0
     budget_id = request.user.last_name
     username = ExpenseInfo.username
     expense_items = ExpenseInfo.objects.filter(user_expense=budget_id).order_by('-date_added')[:5]
@@ -84,6 +89,7 @@ def index(request):
         expense_month = ExpenseInfo.objects.filter(user_expense=budget_id,
                                                    date_added__month=date.today().month).aggregate(
             expenses=Sum('cost', filter=Q(cost__lt=0)) * -1)
+        if budget_total['budget'] is None: budget_total['budget'] = 0
         if expense_total['expenses'] is not None:
             balance = budget_total['budget'] - expense_total['expenses']
         else:
@@ -92,6 +98,7 @@ def index(request):
             expense_today['expenses'] = 0
         if expense_month['expenses'] is None:
             expense_month['expenses'] = 0
+        if balance is None: balance = 0
     except TypeError or UnboundLocalError:
         print('No data.')
 
@@ -125,6 +132,34 @@ def add_item(request):
                                    date_added=expense_date, user_expense=budget_id)
     except ValueError or TypeError:
         print('No data.')
+    return HttpResponseRedirect('app')
+
+def add_item_by_img(request):
+    budget_id = request.user.last_name
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Lukar\AppData\Local\Tesseract-OCR\tesseract.exe'
+    if request.method == 'POST':
+        get_img_file = request.FILES['img_file']
+        fs = FileSystemStorage()
+        fs.save(get_img_file.name, get_img_file)
+        img = cv2.imread("media/" + get_img_file.name)
+
+        # Adding custom options
+        custom_config = r'--oem 3 --psm 6'
+        text = pytesseract.image_to_string(img, config=custom_config)
+        # print(text)
+        index = text.find("SUMA:")
+        if index == -1:
+            index = text.find("SUMA")
+        if index == -1:
+            index = text.find("PLN")
+        word_index = text[index:index + 20]
+        res = ''.join(filter(lambda i: i.isdigit() or i == '.' or i == ',', word_index))
+        resault =(res.replace(',', '.'))
+        try:
+            ExpenseInfo.objects.create(username=request.user, expense_name="Paragon", category="category", cost='-' + resault,
+                                       date_added="2022-02-20", user_expense=budget_id)
+        except ValueError or TypeError:
+            print('No data.')
     return HttpResponseRedirect('app')
 
 
