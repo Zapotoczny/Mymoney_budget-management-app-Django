@@ -39,6 +39,12 @@ body {
     margin-left: 50px;
 }
 
+.dash_container{
+  margin:auto;
+  padding-left:18%;
+  padding-bottom:105px;
+}
+
 .material-icons,
 .icon-text {
     vertical-align: middle;
@@ -134,7 +140,10 @@ nav {
 
 .modal{
     border-radius: 20px;
-    border-width: 10px;
+}
+div#modal1{
+    border-radius: 20px;
+    border-width: 2px;
     border-style: solid;
     border-color: #2196F3;
 }

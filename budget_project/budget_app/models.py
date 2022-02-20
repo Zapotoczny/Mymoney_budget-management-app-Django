@@ -13,3 +13,4 @@ class ExpenseInfo(models.Model):
     budget_id = models.CharField(default='0123456789', max_length=10)
     date_added = models.DateField()
     user_expense = models.CharField(max_length=20)
+    media_url = models.TextField(blank=True, null=True)

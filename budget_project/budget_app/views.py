@@ -138,6 +138,9 @@ def add_item_by_img(request):
     budget_id = request.user.last_name
     pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Lukar\AppData\Local\Tesseract-OCR\tesseract.exe'
     if request.method == 'POST':
+        name = request.POST['expense_name']
+        category = request.POST['category']
+        expense_date = request.POST['expense_date']
         get_img_file = request.FILES['img_file']
         fs = FileSystemStorage()
         fs.save(get_img_file.name, get_img_file)
@@ -156,8 +159,8 @@ def add_item_by_img(request):
         res = ''.join(filter(lambda i: i.isdigit() or i == '.' or i == ',', word_index))
         resault =(res.replace(',', '.'))
         try:
-            ExpenseInfo.objects.create(username=request.user, expense_name="Paragon", category="category", cost='-' + resault,
-                                       date_added="2022-02-20", user_expense=budget_id)
+            ExpenseInfo.objects.create(username=request.user, expense_name=name + "(p)", category=category, cost='-' + resault,
+                                       date_added=expense_date, user_expense=budget_id, media_url="media/" + get_img_file.name)
         except ValueError or TypeError:
             print('No data.')
     return HttpResponseRedirect('app')

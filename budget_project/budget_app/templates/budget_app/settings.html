@@ -59,14 +59,6 @@
             <input placeholder='Podaj nową nazwę' name='change_name' id='change_name' type='text'>
         </form>
     </div>
-    {% block content %}
-  <h2>Upload</h2>
-  <form method="post" action='{% url "add item by img" %}' enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="document">
-    <button type="submit">Upload file</button>
-  </form>
-    {% endblock %}
 </div>
 
 </body>

@@ -76,6 +76,7 @@
                                     <th>Wartość</th>
                                     <th>Data</th>
                                     <th>Usuń</th>
+                                    <th>Paragon</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -89,6 +90,11 @@
                                     <td>{{ expense_item.cost }}zł</td>
                                     <td>{{ expense_item.date_added}}</td>
                                     <td><a href="{% url 'delete item' expense_item.id %}"><i class="material-icons" style="color: red;">delete</i></a></td>
+                                    {% if expense_item.media_url is Null  %}
+                                    <td></td>
+                                    {% else  %}
+                                    <td><a href={{ expense_item.media_url}}><i class="material-icons" style="color: green;">visibility</i></a></td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
                             </tbody>

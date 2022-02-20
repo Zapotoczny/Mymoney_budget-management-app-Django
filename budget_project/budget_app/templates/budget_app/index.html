@@ -53,100 +53,100 @@
 
         <div class="section">
             <div class="row">
-                    <div class="row">
-                        <div class="container">
-<!--                            <h3 class='center'>Wpływy wynoszą : <span style="color:green;">{{budget}}</span> zł</h3>-->
-<!--                            <h3 clas='center'>Wydatki wynoszą : <span style="color:red;">{{expenses}}</span> zł</h3>-->
-                            <div class="dash_info col s3">
-                                    <a class="title_dash_balance1">Balans</a>
-                                            <h4 class="amount_dash_balance1">{{balance}}zł</h4></div>
-                            <div class="dash_info col s3">
-                                    <a class="title_dash_balance2">Dzisiaj</a>
-                                            <h4 class="amount_dash_balance2">{{expenses_today}}zł</h4></div>
-                            <div class="dash_info col s3">
-                                    <a class="title_dash_balance3">Miesiąc</a>
-                                            <h4 class="amount_dash_balance2">{{expenses_month}}zł</h4></div>
-                            <br><br><br><br><br><br><br>
-                            <h4 class="add_expanse_title">Dodaj wydatek</h4><br>
-                            <!--                            ADD NEW IMG-->
-                             <form enctype="multipart/form-data" action='{% url "add item by img" %}' method='post'>
-                                 {% csrf_token %}
-                             <div class="center">
+                    <div class="container">
+                        <div class="dash_container">
+                        <div class="dash_info col s3">
+                                <a class="title_dash_balance1">Balans</a>
+                                        <h4 class="amount_dash_balance1">{{balance}}zł</h4></div>
+                        <div class="dash_info col s3">
+                                <a class="title_dash_balance2">Dzisiaj</a>
+                                        <h4 class="amount_dash_balance2">{{expenses_today}}zł</h4></div>
+                        <div class="dash_info col s3">
+                                <a class="title_dash_balance3">Miesiąc</a>
+                                        <h4 class="amount_dash_balance2">{{expenses_month}}zł</h4></div>
+                        </div>
 
-                             <a style="align: center;" class="center waves-effect waves-light btn modal-trigger blue" href="#modal1">Dodaj paragon</a>
-                              <!-- Modal Structure -->
-                              <div id="modal1" class="modal" style="max-width:30%;padding:20px">
-                                <div class="modal-content">
-                                  <div class="file-field input-field" style="margin:auto;">
+                        <h4 class="add_expanse_title">Dodaj wydatek</h4><br>
+                        <!--                            ADD NEW IMG-->
+                         <form enctype="multipart/form-data" action='{% url "add item by img" %}' method='post'>
+                             {% csrf_token %}
+                         <div class="center">
 
-                                  <div class="btn">
-                                    <span>File</span>
-                                    <input type="file" name="img_file">
-                                  </div>
+                         <a style="align: center;" class="center waves-effect waves-light btn modal-trigger blue" href="#modal1">Dodaj paragon</a>
+                          <!-- Modal Structure -->
+                          <div id="modal1" class="modal" style="max-width:30%;padding:20px">
+                            <div class="modal-content">
+                              <div class="file-field input-field" style="margin:auto;">
+
+                              <div class="btn">
+                                <span>File</span>
+                                <input type="file" name="img_file">
+                              </div>
 
 
-                                  <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
-                                  </div>
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                              </div>
+                            <div class="input-field">
+                                <input placeholder="Nazwa" maxlength="20" name="expense_name" id='expense_name' type='text' class='validate'>
+                            </div>
+                              <div class="input-field">
+                                <select name="category" id='category' class='validate'>
+                                  <option value="" disabled selected>Kategoria</option>
+                                  <option value="Przyjemności">Przyjemności</option>
+                                  <option value="Spożywcze">Spożywcze</option>
+                                  <option value="Dom">Dom</option>
+                                  <option value="Rachunki">Rachunki</option>
+                                  <option value="Chemia">Chemia</option>
+                                  <option value="Samochód">Samochód</option>
+                                </select>
+                            </div>
 
                                   <div class="input-field">
-                                    <select name="category" id='category' class='validate'>
-                                      <option value="" disabled selected>Kategoria</option>
-                                      <option value="Przyjemności">Przyjemności</option>
-                                      <option value="Spożywcze">Spożywcze</option>
-                                      <option value="Dom">Dom</option>
-                                      <option value="Rachunki">Rachunki</option>
-                                      <option value="Chemia">Chemia</option>
-                                      <option value="Samochód">Samochód</option>
-                                    </select>
-                                </div>
-
-                                      <div class="input-field">
-                                    <input placeholder='Data' name="expense_date" id="expense_date" type="text" class='datepicker'>
-                                </div>
-
-                                </div>
-                                    <button class="btn-floating btn-large waves-effect waves-light blue">
-                                    <i class="material-icons right">add</i>
-                                </button>
-
-                                </div>
-
-                              </div>
+                                <input placeholder='Data' name="expense_date" id="expense_date" type="text" class='datepicker'>
                             </div>
-                          </form>
-                            <form class="col s12" action='{% url "add item" %}' method='post'>
-                            {% csrf_token %}
-                            <div class="add_item">
-                                    <div class="input-field col s2">
-                                    <input placeholder="Nazwa" name="expense_name" id='expense_name' type='text' class='validate'>
-                                </div>
-                                <div class="input-field col s2">
-                                    <select name="category" id='category' class='validate'>
-                                      <option value="" disabled selected>Kategoria</option>
-                                      <option value="Przyjemności">Przyjemności</option>
-                                      <option value="Spożywcze">Spożywcze</option>
-                                      <option value="Dom">Dom</option>
-                                      <option value="Rachunki">Rachunki</option>
-                                      <option value="Chemia">Chemia</option>
-                                      <option value="Samochód">Samochód</option>
-                                    </select>
-                                </div>
-                                <div class="input-field col s2">
-                                    <input placeholder='Wartość' name='cost' id='cost' type='number' min="0" class='validate'>
-                                </div>
-                                <div class="input-field col s2">
-                                    <input placeholder='Data' name="expense_date" id="expense_date" type="text" class='datepicker'>
-                                </div>
+
+                            </div>
                                 <button class="btn-floating btn-large waves-effect waves-light blue">
-                                    <i class="material-icons right">add</i>
-                                </button>
+                                <i class="material-icons right">add</i>
+                            </button>
+
                             </div>
 
+                          </div>
                         </div>
+                      </form>
+                        <form class="col s12" action='{% url "add item" %}' method='post'>
+                        {% csrf_token %}
+                        <div class="add_item">
+                                <div class="input-field col s2">
+                                <input placeholder="Nazwa" maxlength="20" name="expense_name" id='expense_name' type='text' class='validate'>
+                            </div>
+                            <div class="input-field col s2">
+                                <select name="category" id='category' class='validate'>
+                                  <option value="" disabled selected>Kategoria</option>
+                                  <option value="Przyjemności">Przyjemności</option>
+                                  <option value="Spożywcze">Spożywcze</option>
+                                  <option value="Dom">Dom</option>
+                                  <option value="Rachunki">Rachunki</option>
+                                  <option value="Chemia">Chemia</option>
+                                  <option value="Samochód">Samochód</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Wartość' name='cost' id='cost' type='number' min="0" class='validate'>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Data' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                            </div>
+                            <button class="btn-floating btn-large waves-effect waves-light blue">
+                                <i class="material-icons right">add</i>
+                            </button>
+                        </div>
+
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
 
         <div class="section">
