@@ -25,26 +25,23 @@
                     <li></li>
             </ul>
     </div >
-  <form action="" method="post" id="login-form">
+  <form method="post" id="login-form">
       {% csrf_token %}
       <h1>MyMoney</h1>
-
       {% if form.errors %}
-      <p class="error" style="color:red;">Incorrect login or password</p>
+      <p class="error" style="color:red;">Błędny login lub hasło</p>
       {% endif %}
-      <p class="login_user_pass">Username:</p>
+      <p class="login_user_pass">Login:</p>
       <div class="input-box">
           {{form.username}}
       </div>
-      <p class="login_user_pass">Password:</p>
+      <p class="login_user_pass">Hasło:</p>
       <div class="input-box">
           {{form.password}}
       </div>
-
-      <button type="submit" class="login-btn">Login</button>
-
+      <button type="submit" class="login-btn">Zaloguj</button>
       <div class="bottom-links">
-        <p>Don’t have account? <a href="/signup">Sign up</a></p>
+        <p>Nie masz jeszcze konta? <a href="/signup">Zarejestruj się</a></p>
       </div>
   </form>
 </body>

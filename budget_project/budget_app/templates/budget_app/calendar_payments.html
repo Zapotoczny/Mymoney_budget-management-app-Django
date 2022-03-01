@@ -53,6 +53,7 @@
     <table class="highlight centered responsive-table">
         <thead>
             <tr>
+                <th></th>
                 <th>Użytkownik</th>
                 <th>Nazwa</th>
                 <th>Kategoria</th>
@@ -66,6 +67,7 @@
         <tbody>
             {% for expense_item in expense_items %}
             <tr>
+                <td><img src="media/{{expense_item.category}}.png"></td>
                 <td>{{ expense_item.username}}</td>
                 <td>{{ expense_item.expense_name }}</td>
                 <td>{{ expense_item.category }}</td>

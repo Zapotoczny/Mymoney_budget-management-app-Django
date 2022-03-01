@@ -87,6 +87,7 @@
                         <table class="highlight centered responsive-table" ">
                             <thead>
                                 <tr style="font-size: 20px; font-weight: 300;">
+                                    <th></th>
                                     <th>Użytkownik</th>
                                     <th>Nazwa</th>
                                     <th>Kategoria</th>
@@ -100,6 +101,7 @@
                             <tbody style="font-size: 18px; font-family: 'Montserrat', sans-serif; font-weight: 800;">
                                 {% for expense_item in expense_items %}
                                 <tr>
+                                    <td><img src="media/{{expense_item.category}}.png"></td>
                                     <td>{{ expense_item.username}}</td>
                                     <td>{{ expense_item.expense_name }}</td>
                                     <td>{{ expense_item.category }}</td>

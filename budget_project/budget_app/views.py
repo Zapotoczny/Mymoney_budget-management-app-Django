@@ -117,7 +117,7 @@ def index(request):
         data.append(dupa['expenses'])
     context = {'username': username, 'expense_items': expense_items, 'budget': budget_total['budget'],
                'expenses': expense_total['expenses'], 'expenses_today': expense_today['expenses'],
-               'expenses_month': expense_month['expenses'], 'balance': balance, 'labels': labels, 'data': data}
+               'expenses_month': expense_month['expenses'], 'balance': balance, 'labels': labels, 'data': data  }
     return render(request, 'budget_app/index.html', context=context)
 
 

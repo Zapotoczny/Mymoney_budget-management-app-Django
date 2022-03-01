@@ -47,9 +47,9 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="container">
-                            <div class="dash_info_payment col s3 offset-s3 "><a class="title_dash_balance2">Balans ten miesiąc</a>
+                            <div class="dash_info_payment col s3 offset-s3 "><a class="title_dash_balance2">Ten miesiąc</a>
                                             <h4 class="amount_dash_balance2">{{balance}}zł</h4></div>
-                            <div class="dash_info_payment col s3 offset-s3"><a class="title_dash_balance3">Balans zeszły miesiąc</a>
+                            <div class="dash_info_payment col s3 offset-s3"><a class="title_dash_balance3">Zeszły miesiąc</a>
                                             <h4 class="amount_dash_balance2">{{balance_month}}zł</h4></div>
                             <br><br><br><br><br><br><br>
             </div>
@@ -67,9 +67,10 @@
                     </button>
                     </form>
                     <div class="col s12">
-                        <table class="highlight centered responsive-table" ">
+                        <table class="highlight centered responsive-table">
                             <thead>
                                 <tr style="font-size: 20px; font-weight: 300;">
+                                    <th></th>
                                     <th>Użytkownik</th>
                                     <th>Nazwa</th>
                                     <th>Kategoria</th>
@@ -84,6 +85,7 @@
                             <tbody style="font-size: 18px; font-family: 'Montserrat', sans-serif; font-weight: 800;">
                                 {% for expense_item in expense_items %}
                                 <tr>
+                                    <td><img src="media/{{expense_item.category}}.png"></td>
                                     <td>{{ expense_item.username}}</td>
                                     <td>{{ expense_item.expense_name }}</td>
                                     <td>{{ expense_item.category }}</td>

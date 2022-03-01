@@ -156,6 +156,7 @@
                         <table class="highlight centered responsive-table">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Użytkownik</th>
                                     <th>Nazwa</th>
                                     <th>Kategoria</th>
@@ -168,7 +169,12 @@
 
                             <tbody>
                                 {% for expense_item in expense_items %}
-                                <tr>
+                                {% if expense_item.cost < 0 %}
+                                <tr style="background-color: rgba(201, 76, 76, 0.07);border-radius:10px;">
+                                {% else %}
+                                <tr style="background-color: rgba(3, 160, 98, 0.07);">
+                                {% endif %}
+                                    <td><img src="media/{{expense_item.category}}.png"></td>
                                     <td>{{ expense_item.username}}</td>
                                     <td>{{ expense_item.expense_name }}</td>
                                     <td>{{ expense_item.category }}</td>
@@ -212,6 +218,7 @@ var myChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
+
     options: {
         scales: {
             y: {
